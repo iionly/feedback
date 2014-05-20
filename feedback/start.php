@@ -21,33 +21,33 @@ elgg_register_event_handler('init', 'system', 'feedback_init');
  */
 function feedback_init() {
 
-    // extend the view
-    if(elgg_get_plugin_setting("publicAvailable_feedback", "feedback") == "yes" || elgg_is_logged_in()) {
-        elgg_extend_view('page/elements/body', 'feedback/footer');
-    }
+	// extend the view
+	if (elgg_get_plugin_setting("publicAvailable_feedback", "feedback") == "yes" || elgg_is_logged_in()) {
+		elgg_extend_view('page/elements/body', 'feedback/footer');
+	}
 
-    // extend the site CSS
-    elgg_extend_view('css/elgg', 'feedback/css');
-    elgg_extend_view('css/admin', 'feedback/admin_css');
+	// extend the site CSS
+	if (elgg_is_active_plugin('aalborg_theme')) {
+		elgg_extend_view('css/elgg', 'feedback/css_aalborg');
+	} else {
+		elgg_extend_view('css/elgg', 'feedback/css');
+	}
+	elgg_extend_view('css/admin', 'feedback/admin_css');
 
-    // create feedback page in admin section
-    elgg_register_admin_menu_item('administer', 'feedback', 'administer_utilities');
+	// create feedback page in admin section
+	elgg_register_admin_menu_item('administer', 'feedback', 'administer_utilities');
 
-    elgg_register_widget_type('feedback',
-                              elgg_echo('feedback:admin:title'),
-                              elgg_echo('feedback:widget:description'),
-                              array('admin')
-                             );
+	elgg_register_widget_type('feedback', elgg_echo('feedback:admin:title'), elgg_echo('feedback:widget:description'), array('admin'));
 
-    // Register feedback pages as public pages for walled-garden
-    elgg_register_plugin_hook_handler('public_pages', 'walled_garden', 'feedback_public');
+	// Register feedback pages as public pages for walled-garden
+	elgg_register_plugin_hook_handler('public_pages', 'walled_garden', 'feedback_public');
 
-    // Register actions
-    elgg_register_action('feedback/delete', elgg_get_plugins_path() . 'feedback/actions/delete.php', 'admin');
-    elgg_register_action('feedback/submit_feedback', elgg_get_plugins_path() . 'feedback/actions/submit_feedback.php', 'public');
+	// Register actions
+	elgg_register_action('feedback/delete', elgg_get_plugins_path() . 'feedback/actions/delete.php', 'admin');
+	elgg_register_action('feedback/submit_feedback', elgg_get_plugins_path() . 'feedback/actions/submit_feedback.php', 'public');
 }
 
 function feedback_public($hook, $handler, $return, $params) {
-    $pages = array('mod/feedback/_graphics/ajax-loader.gif', 'action/feedback/submit_feedback');
-    return array_merge($pages, $return);
+	$pages = array('mod/feedback/_graphics/ajax-loader.gif', 'action/feedback/submit_feedback');
+	return array_merge($pages, $return);
 }

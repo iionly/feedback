@@ -17,9 +17,9 @@
 
 #feedbackWrapper {
 	position: fixed;
-	top: 136px;
-	left: 25px;
-	width: 320px;
+	top: 189px;
+	left: 35px;
+	width: 350px;
 	z-index:1;
 }
 
@@ -28,7 +28,7 @@
 }
 
 #feedBackContent {
-	width: 310px;
+	width: 340px;
 	display: none;
 	overflow: hidden;
 	float: left;
@@ -48,10 +48,9 @@
 	padding-left:10px;
 	padding-bottom:10px;
 	color: white;
-	background-color: #4690D6;
-	font-style: italic;
-	font-family: Georgia, times, serif;
-	text-shadow: 1px 2px 4px #333;
+	background-color: #60B8F7;
+	font-family: Georgia,Times,"Times New Roman",serif;
+	text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
 	text-decoration: none;
 }
 
@@ -69,7 +68,7 @@
 
 .feedbackButton {
 	position: fixed;
-	top: 280px;
+	top: 320px;
 	left: 0px;
 	z-index:1;
 	font-size:24px;
@@ -94,10 +93,10 @@
 }
 
 .feedbackText {
-	width:290px;
+	width:320px;
 }
 
 .feedbackTextbox {
-	width:290px;
+	width:320px;
 	height:75px;
 }
