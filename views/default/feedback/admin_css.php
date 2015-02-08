@@ -3,7 +3,7 @@
  * Elgg Feedback plugin
  * Feedback interface for Elgg sites
  *
- * for Elgg 1.9 by iionly
+ * for Elgg 1.8 onwards by iionly
  * iionly@gmx.de
  */
 ?>

@@ -3,7 +3,7 @@
  * Elgg Feedback plugin
  * Feedback interface for Elgg sites
  *
- * for Elgg 1.9 by iionly
+ * for Elgg 1.8 onwards by iionly
  * iionly@gmx.de
  *
  * List the latest feedback entries
@@ -11,17 +11,17 @@
 
 $limit = $vars['entity']->num_display;
 if (!$limit) {
-    $limit = 4;
+	$limit = 4;
 }
- 
+
 $list = elgg_list_entities(array(
-        'type' => 'object',
-        'subtype' => 'feedback',
-        'limit' => $limit,
-        'pagination' => false
+	'type' => 'object',
+	'subtype' => 'feedback',
+	'limit' => $limit,
+	'pagination' => false
 ));
 if (!$list) {
-    $list = '<p class="mtm">' . elgg_echo('feedback:list:nofeedback') . '</p>';
+	$list = '<p class="mtm">' . elgg_echo('feedback:list:nofeedback') . '</p>';
 }
 
 echo $list;

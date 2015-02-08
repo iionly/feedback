@@ -10,19 +10,25 @@
  * @copyright Prashant Juvekar
  * @link http://www.linkedin.com/in/prashantjuvekar
  *
- * for Elgg 1.9 by iionly
+ * for Elgg 1.8 onwards by iionly
  * iionly@gmx.de
  */
 
-$controls = elgg_view("output/confirmlink",array('href' => elgg_get_site_url() . "action/feedback/delete?guid=" . $vars['entity']->guid, 'confirm' => elgg_echo('deleteconfirm'), 'class' => 'elgg-icon elgg-icon-delete'));
+$controls = elgg_view("output/url",array(
+	'href' => elgg_get_site_url() . "action/feedback/delete?guid=" . $vars['entity']->guid,
+	'text' => '',
+	'is_action' => true,
+	'is_trusted' => true,
+	'confirm' => elgg_echo('deleteconfirm'),
+	'class' => 'elgg-icon elgg-icon-delete'));
 
 $mood = elgg_echo ( "feedback:mood:" . $vars['entity']->mood );
 $about = elgg_echo ( "feedback:about:" . $vars['entity']->about );
 
 $page = "Unknown";
 if ( !empty($vars['entity']->page) ) {
-    $page = $vars['entity']->page;
-    $page = "<a href='" . $page . "'>" . $page . "</a>";
+	$page = $vars['entity']->page;
+	$page = "<a href='" . $page . "'>" . $page . "</a>";
 }
 
 $info = "<div style='float:left;width:25%'><b>".elgg_echo('feedback:list:mood').": </b>" . $mood . "</div>";

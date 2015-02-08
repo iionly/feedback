@@ -10,7 +10,7 @@
  * @copyright Prashant Juvekar
  * @link http://www.linkedin.com/in/prashantjuvekar
  *
- * for Elgg 1.9 by iionly
+ * for Elgg 1.8 onwards by iionly
  * iionly@gmx.de
  */
 ?>

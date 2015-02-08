@@ -10,7 +10,7 @@
  * @copyright Prashant Juvekar
  * @link http://www.linkedin.com/in/prashantjuvekar
  *
- * for Elgg 1.9 by iionly
+ * for Elgg 1.8 onwards by iionly
  * iionly@gmx.de
  */
 
@@ -20,9 +20,9 @@ $guid = (int) get_input('guid');
 // Make sure we actually have permission to edit
 $feedback = get_entity($guid);
 if ($feedback->getSubtype() == "feedback") {
-    // Delete it!
-    $feedback->delete();
-    // Success message
-    system_message(elgg_echo("feedback:delete:success"));
-    forward(REFERER);
+	// Delete it!
+	$feedback->delete();
+	// Success message
+	system_message(elgg_echo("feedback:delete:success"));
+	forward(REFERER);
 }

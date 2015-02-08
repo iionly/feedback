@@ -10,14 +10,14 @@
  * @copyright Prashant Juvekar
  * @link http://www.linkedin.com/in/prashantjuvekar
  *
- * for Elgg 1.9 by iionly
+ * for Elgg 1.8 onwards by iionly
  * iionly@gmx.de
  */
 
 if (elgg_get_logged_in_user_guid()) {
-    $owner_guid = elgg_get_logged_in_user_guid();
+	$owner_guid = elgg_get_logged_in_user_guid();
 } else {
-    $owner_guid = elgg_get_config('site_guid');
+	$owner_guid = elgg_get_config('site_guid');
 }
 
 $access = elgg_set_ignore_access(true);
@@ -43,17 +43,17 @@ echo "<div id=\"feedbackSuccess\">".elgg_echo("feedback:submit:success")."</div>
 // now email if required
 $user_guids = array();
 for ($idx=1; $idx<=5; $idx++) {
-    $name = elgg_get_plugin_setting('user_'.$idx, 'feedback');
-    if (!empty($name)) {
-        if ($user = get_user_by_username($name)) {
-            $user_guids[] = $user->guid;
-        }
-    }
+	$name = elgg_get_plugin_setting('user_'.$idx, 'feedback');
+	if (!empty($name)) {
+		if ($user = get_user_by_username($name)) {
+			$user_guids[] = $user->guid;
+		}
+	}
 }
 if (count($user_guids) > 0) {
-    foreach($user_guids as $user_guid) {
-        notify_user($user_guid, elgg_get_config('site_guid'), elgg_echo('feedback:email:subject', array($feedback_sender)), elgg_echo('feedback:email:body', array($feedback_txt)));
-    }
+	foreach($user_guids as $user_guid) {
+		notify_user($user_guid, elgg_get_config('site_guid'), elgg_echo('feedback:email:subject', array($feedback_sender)), elgg_echo('feedback:email:body', array($feedback_txt)));
+	}
 }
 
 elgg_set_ignore_access($access);
