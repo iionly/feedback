@@ -29,7 +29,7 @@ return array(
 
 'feedback:default:id' => 'Name und/oder Email-Adresse',
 'feedback:default:txt' => 'Teile uns mit, was Du denkst!',
-'feedback:default:txt:err' => 'Bei Deinem Feedback hat leider die Nachricht gefehlt.\nWir sind auf Deine Vorschläge oder Kritik gespannt.\nBitte gebe Deine Nachricht ein, bevor Du Dein Feedback versendest.',
+'feedback:default:txt:err' => "Bei Deinem Feedback hat leider die Nachricht gefehlt.\nWir sind auf Deine Vorschläge oder Kritik gespannt.\nBitte gebe Deine Nachricht ein, bevor Du Dein Feedback versendest.",
 
 'feedback:submit_msg' => 'Senden...',
 'feedback:submit_err' => 'Beim Versenden des Feedbacks ist ein Problem aufgetreten!',

@@ -3,7 +3,7 @@
 	<name>Feedback</name>
 	<id>feedback</id>
 	<author>iionly (for Elgg 1.8 onwards), Simon ST (for Elgg 1.7), Prashant Juvekar</author>
-	<version>1.10.3</version>
+	<version>1.10.4</version>
 	<category>communication</category>
 	<description>Site Feedback Plugin.</description>
 	<website>https://github.com/iionly</website>

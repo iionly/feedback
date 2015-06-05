@@ -29,7 +29,7 @@ return array(
 
 'feedback:default:id' => 'Name and/or Email',
 'feedback:default:txt' => 'Let us know what you think!',
-'feedback:default:txt:err' => 'No feedback message has been provided.\nWe value your suggestions and criticisms.\nPlease enter your message and press Send.',
+'feedback:default:txt:err' => "No feedback message has been provided.\nWe value your suggestions and criticisms.\nPlease enter your message and press Send.",
 
 'feedback:submit_msg' => 'Submitting...',
 'feedback:submit_err' => 'Could not submit feedback!',

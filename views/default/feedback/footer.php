@@ -14,6 +14,8 @@
  * iionly@gmx.de
  */
 
+elgg_require_js('feedback/feedback');
+
 $user_ip = $_SERVER[REMOTE_ADDR];
 
 $user_id = elgg_echo('feedback:default:id');
@@ -22,152 +24,64 @@ if (elgg_is_logged_in()) {
 	$user_id = $user->name . " (" . $user->email .")";
 }
 
-$feedback_url = elgg_add_action_tokens_to_url(elgg_get_site_url() ."action/feedback/submit_feedback");
+$progress_img = '<img src="' . elgg_get_site_url() . 'mod/feedback/_graphics/ajax-loader.gif" alt="' . elgg_echo('feedback:submit_msg') . '">';
+$open_img = '<div class="elgg-button elgg-button-action feedbackButton">' . elgg_echo('feedback:title') . '</div>';
+$close_img = '<div class="elgg-button elgg-button-action feedbackButton">' . elgg_echo('feedback:title') . '</div>';
 
-$progress_img = '<img src="'.elgg_get_site_url().'mod/feedback/_graphics/ajax-loader.gif" alt="'.elgg_echo('feedback:submit_msg').'" />';
-$open_img = '<div class="elgg-button elgg-button-action feedbackButton">'.elgg_echo('feedback:title').'</div>';
-$close_img = '<div class="elgg-button elgg-button-action feedbackButton">'.elgg_echo('feedback:title').'</div>';
-?>
+echo "<div id='feedbackWrapper' data-userip='{$user_ip}' data-progressimg='{$progress_img}' data-openimg='{$open_img}' data-closeimg='{$close_img}'>";
 
-<div id="feedbackWrapper">
+	echo '<div id="feedBackToggler" href="#">';
+		echo '<a id="feedBackTogglerLink">' . $open_img . '</a>';
+	echo '</div>';
 
-	<div id="feedBackToggler">
-		<a id="feedBackTogglerLink" href="javascript:void(0)" onclick="FeedBack_Toggle();this.blur();">
-			<?php echo $open_img ?>
-		</a>
-	</div>
+	echo '<div id="feedBackContent">';
+		echo '<div style="padding:10px;">';
+			echo '<h1 style="padding-bottom:5px;">' . elgg_echo('feedback:title') . '</h1>';
+			echo '<div style="padding-bottom:5px;">' . elgg_echo('feedback:message') . '</div>';
 
-	<div id="feedBackContent">
-		<div style="padding:10px;">
-			<h1 style="padding-bottom:5px;">
-				<?php echo elgg_echo('feedback:title'); ?>
-			</h1>
+			echo '<div id="feedBackFormInputs">';
 
-			<div style="padding-bottom:5px;">
-				<?php echo elgg_echo('feedback:message'); ?>
-			</div>
+				echo '<form id="feedBackForm" action="" method="post">';
+					echo '<div>';
+						echo '<div><label>' . elgg_echo('feedback:list:mood') . ':</label></div>';
+						echo '<div>';
+							echo '<div><input type="radio" name="mood" value="angry">' . elgg_echo('feedback:mood:angry') . '</div>';
+							echo '<div><input type="radio" name="mood" value="neutral" checked>' . elgg_echo('feedback:mood:neutral') . '</div>';
+							echo '<div><input type="radio" name="mood" value="happy">' . elgg_echo('feedback:mood:happy') . '</div>';
+						echo '</div>';
+					echo '</div>';
+					echo '<div style="clear:both;"></div>';
+					echo '<div>';
+						echo '<div><label>' . elgg_echo('feedback:list:about') . ':</label></div>';
+						echo '<div>';
+							echo '<div><input type="radio" name="about" value="bug_report">' . elgg_echo('feedback:about:bug_report') . '</div>';
+							echo '<div><input type="radio" name="about" value="suggestions" checked>' . elgg_echo('feedback:about:suggestions') . '</div>';
+							echo '<div><input type="radio" name="about" value="content">' . elgg_echo('feedback:about:content') . '</div>';
+							echo '<div><input type="radio" name="about" value="compliment">' . elgg_echo('feedback:about:compliment') . '</div>';
+							echo '<div><input type="radio" name="about" value="other">' . elgg_echo('feedback:about:other') . '</div>';
+						echo '</div>';
+					echo '</div>';
+					echo '<div style="clear:both;"></div>';
+					echo '<div style="padding-top:5px;">';
+						echo '<input type="text" name="feedback_id" value="' . $user_id . '" id="feedback_id" size="20" class="feedbackText" />';
+					echo '</div>';
+					echo '<div style="padding-top:5px;">';
+						echo '<textarea name="feedback_txt" cols="25" rows="10" id="feedback_txt" class="feedbackTextbox">' . elgg_echo('feedback:default:txt') . '</textarea>';
+					echo '</div>';
+					echo '<div style="padding-top:10px;">';
+						echo '<input id="feedback_send_btn" name="send" value="' . elgg_echo('send') . '" type="button" class="elgg-button elgg-button-submit"/>'.' ';
+						echo '<input id="feedback_cancel_btn" name="cancel" value="' . elgg_echo('cancel') . '" type="button" class="elgg-button elgg-button-cancel"/>';
+					echo '</div>';
+				echo '</form>';
 
-			<div id="feedBackFormInputs">
-				<form id="feedBackForm" action="" method="post" onsubmit="FeedBack_Send();return false;">
-					<div>
-						<div><b><?php echo elgg_echo('feedback:list:mood')?>:</b></div>
-						<div>
-							<div><input type="radio" name="mood" value="angry"> <?php echo elgg_echo('feedback:mood:angry')?></div>
-							<div><input type="radio" name="mood" value="neutral" checked> <?php echo elgg_echo('feedback:mood:neutral')?></div>
-							<div><input type="radio" name="mood" value="happy"> <?php echo elgg_echo('feedback:mood:happy')?></div>
-						</div>
-					</div>
-					<div style="clear:both;"></div>
-					<div>
-						<div><b><?php echo elgg_echo('feedback:list:about')?>:</b></div>
-						<div>
-							<div><input type="radio" name="about" value="bug_report"> <?php echo elgg_echo('feedback:about:bug_report')?></div>
-							<div><input type="radio" name="about" value="suggestions" checked> <?php echo elgg_echo('feedback:about:suggestions')?></div>
-							<div><input type="radio" name="about" value="content"> <?php echo elgg_echo('feedback:about:content')?></div>
-							<div><input type="radio" name="about" value="compliment"> <?php echo elgg_echo('feedback:about:compliment')?></div>
-							<div><input type="radio" name="about" value="other"> <?php echo elgg_echo('feedback:about:other')?></div>
-						</div>
-					</div>
-					<div style="clear:both;"></div>
-					<div style="padding-top:5px;">
-						<input type="text" name="feedback_id" value="<?php echo $user_id?>" id="feedback_id" size="20" onfocus="if (this.value == '<?php echo elgg_echo('feedback:default:id')?>') {this.value = '';}" onblur="if (this.value == '') {this.value = '<?php echo elgg_echo('feedback:default:id')?>';}" class="feedbackText" />
-					</div>
-					<div style="padding-top:5px;">
-						<textarea name="feedback_txt" cols="25" rows="10" id="feedback_txt" onfocus="if (this.value == '<?php echo elgg_echo('feedback:default:txt')?>') {this.value = '';}" onblur="if (this.value == '') {this.value = '<?php echo elgg_echo('feedback:default:txt')?>';}" class="feedbackTextbox"><?php echo elgg_echo('feedback:default:txt')?></textarea>
-					</div>
-					<div style="padding-top:10px;">
-						<input id="feedback_send_btn"   name="send"   value="<?php echo elgg_echo('send'); ?>"   type="button" class="elgg-button elgg-button-submit" onclick="FeedBack_Send();"  />
-						<input id="feedback_cancel_btn" name="cancel" value="<?php echo elgg_echo('cancel'); ?>" type="button" class="elgg-button elgg-button-cancel" onclick="FeedBack_Toggle();" />
-					</div>
-				</form>
-			</div>
-			<div id="feedBackFormStatus"></div>
-			<div id='feedbackClose' style="padding-top:10px;">
-				<input id="feedback_close_btn" name="close" value="<?php echo elgg_echo('close'); ?>" type="button" class="elgg-button elgg-button-cancel" onclick="FeedBack_Toggle();"  />
-			</div>
-		</div>
-	</div>
+			echo '</div>';
+			echo '<div id="feedBackFormStatus"></div>';
+			echo '<div id="feedbackClose" style="padding-top:10px;">';
+			echo '<input id="feedback_close_btn" name="close" value="' . elgg_echo('close') . '" type="button" class="elgg-button elgg-button-cancel"/>';
+			echo '</div>';
+		echo '</div>';
+	echo '</div>';
 
-	<div style="clear:both;"></div>
+	echo '<div style="clear:both;"></div>';
 
-</div>
-
-<script type="text/javascript">
-
-	<?php
-		// if user is logged in then disable the feedback ID
-		if (elgg_is_logged_in()) {
-			echo "$('#feedback_id').attr ('disabled', 'disabled');";
-		}
-	?>
-
-	$("#feedbackWrapper").width("50px");
-	$('#feedbackClose').hide();
-
-	var toggle_state = 0;
-
-	function FeedBack_Toggle() {
-		if (toggle_state) {
-			toggle_state = 0;
-			$("#feedbackWrapper").width("50px");
-			$("#feedBackTogglerLink").html('<?php echo $open_img?>');
-			$('#feedBackFormInputs').show();
-				$("#feedBackFormStatus").html("");
-			$('#feedbackClose').hide();
-			document.forms["feedBackForm"].reset();
-		} else {
-			toggle_state = 1;
-			$("#feedbackWrapper").width("450px");
-			$("#feedBackTogglerLink").html('<?php echo $close_img?>');
-		}
-
-		$("#feedBackContent").toggle();
-	}
-
-	function FeedBack_Send() {
-		var page = encodeURIComponent(location.href);
-		var mood = $('input[name=mood]:checked').val();
-		var about = $('input[name=about]:checked').val();
-		var id = $("#feedback_id").val().replace(/^\s+|\s+$/g,"");
-		var txt = encodeURIComponent( $("#feedback_txt").val().replace(/^\s+|\s+$/g,"") );
-
-		// if no address provided...
-		if (id == '' || id == "<?php echo elgg_echo('feedback:default:id')?>" ) {
-			id = "<?php echo $user_ip ?>";
-		}
-
-		// if no text provided...
-		if (txt == '' || txt == encodeURIComponent("<?php echo elgg_echo('feedback:default:txt')?>") ) {
-			alert ("<?php echo elgg_echo('feedback:default:txt:err')?>" );
-			return;
-		}
-
-		// show progress indicator
-		$('#feedBackFormStatus').html('<?php echo $progress_img?>');
-
-		// disable the send button while we are submitting
-		$('#feedBackFormInputs').hide();
-
-		// fire the AJAX query
-		jQuery.ajax( {
-			url: "<?php echo $feedback_url?>",
-			type: "POST",
-			data: "page="+page+"&mood="+mood+"&about="+about+"&id="+id+"&txt="+txt,
-			cache: false,
-			dataType: "html",
-			error: function() {
-				//$('#feedBackFormInputs').show();
-				$("#feedBackFormStatus").html("<div id='feedbackError'><?php echo elgg_echo('feedback:submit_err')?></div>");
-				$('#feedbackClose').show();
-				document.forms["feedBackForm"].reset();
-			},
-			success: function(data) {
-				//$('#feedBackFormInputs').show(); // show form
-				$("#feedBackFormStatus").html(data);
-				$('#feedbackClose').show();
-				document.forms["feedBackForm"].reset();
-			}
-		});
-	}
-
-</script>
+echo '</div>';
