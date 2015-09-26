@@ -4,13 +4,13 @@ define(function(require) {
 
 	// if user is logged in then disable the feedback ID
 	if (elgg.is_logged_in()) {
-		$('#feedback_id').attr('disabled', 'disabled');
+		$('#feedback_id').prop('disabled', true);
 	}
 
-	var userip = $('feedbackWrapper').data('userip');
-	var progressimg = $('feedbackWrapper').data('progressimg');
-	var openimg = $('feedbackWrapper').data('data-openimg');
-	var closeimg = $('feedbackWrapper').data('data-closeimg');
+	var userip = $('#feedbackWrapper').data('userip');
+	var progressimg = $('#feedbackWrapper').data('progressimg');
+	var openimg = $('#feedbackWrapper').data('data-openimg');
+	var closeimg = $('#feedbackWrapper').data('data-closeimg');
 
 	$("#feedbackWrapper").width("50px");
 	$('#feedbackClose').hide();
@@ -101,26 +101,26 @@ define(function(require) {
 	});
 
 	$('#feedback_id').focus(function() {
-		if ($(this).attr('value') == elgg.echo('feedback:default:id')) {
-			$(this).attr('value', '');
+		if ($(this).val() == elgg.echo('feedback:default:id')) {
+			$(this).val('');
 		}
 	});
 
 	$('#feedback_id').blur(function() {
-		if ($(this).attr('value') == '') {
-			$(this).attr('value', elgg.echo('feedback:default:id'));
+		if ($(this).val() == '') {
+			$(this).val(elgg.echo('feedback:default:id'));
 		}
 	});
 
 	$('#feedback_txt').focus(function() {
-		if ($(this).attr('value') == elgg.echo('feedback:default:txt')) {
-			$(this).attr('value', '');
+		if ($(this).val() == elgg.echo('feedback:default:txt')) {
+			$(this).val('');
 		}
 	});
 
 	$('#feedback_txt').blur(function() {
-		if ($(this).attr('value') == '') {
-			$(this).attr('value', elgg.echo('feedback:default:txt'));
+		if ($(this).val() == '') {
+			$(this).val(elgg.echo('feedback:default:txt'));
 		}
 	});
 

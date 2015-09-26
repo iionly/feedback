@@ -16,11 +16,11 @@
 
 $controls = elgg_view("output/url",array(
 	'href' => elgg_get_site_url() . "action/feedback/delete?guid=" . $vars['entity']->guid,
-	'text' => '',
+	'text' => elgg_view_icon('delete'),
 	'is_action' => true,
 	'is_trusted' => true,
 	'confirm' => elgg_echo('deleteconfirm'),
-	'class' => 'elgg-icon elgg-icon-delete'));
+));
 
 $mood = elgg_echo ( "feedback:mood:" . $vars['entity']->mood );
 $about = elgg_echo ( "feedback:about:" . $vars['entity']->about );
@@ -31,11 +31,10 @@ if ( !empty($vars['entity']->page) ) {
 	$page = "<a href='" . $page . "'>" . $page . "</a>";
 }
 
-$info = "<div style='float:left;width:25%'><b>".elgg_echo('feedback:list:mood').": </b>" . $mood . "</div>";
-$info .= "<div style='float:left;width:25%'><b>".elgg_echo('feedback:list:about').": </b>" . $about . "</div>";
-$info .= "<br />";
-$info .= "<b>".elgg_echo('feedback:list:page').": </b>" . $page . "<br />";
-$info .= "<b>".elgg_echo('feedback:list:from').": </b>" . $vars['entity']->id . "<br />";
-$info .= nl2br($vars['entity']->txt);
+$info = "<div><b>" . elgg_echo('feedback:list:mood') . ": </b>" . $mood . "</div>";
+$info .= "<div><b>" . elgg_echo('feedback:list:about') . ": </b>" . $about . "</div>";
+$info .= "<div><b>" . elgg_echo('feedback:list:page') . ": </b>" . $page . "</div>";
+$info .= "<div><b>" . elgg_echo('feedback:list:from') . ": </b>" . $vars['entity']->id . "</div>";
+$info .= "<div>" . $vars['entity']->txt . "</div>";
 
 echo elgg_view('page/components/image_block', array('image' => $controls, 'body' => $info, 'class' => 'submitted-feedback'));

@@ -63,7 +63,7 @@ return array(
 'feedback:user_4' => "Benutzername 4: ",
 'feedback:user_5' => "Benutzername 5: ",
 'feedback:settings:public' => "Sollen nicht angemeldete Besucher der Community-Seite Feedback abgeben können? ",
-'feedback:settings:usernames' => "Du kannst bis zu 5 Mitglieder benennen, die benachrichtigt werden sollen, wenn neues Feedback eingereicht wurd. Gebe im folgenden deren Benutzernamen ein: ",
+'feedback:settings:usernames' => "Du kannst bis zu 5 Mitglieder benennen, die benachrichtigt werden sollen, wenn neues Feedback eingereicht wurde. Gebe im folgenden deren Benutzernamen ein: ",
 
 'feedback:email:subject' => 'Feedback von %s',
 'feedback:email:body' => '%s'

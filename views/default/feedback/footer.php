@@ -16,7 +16,33 @@
 
 elgg_require_js('feedback/feedback');
 
-$user_ip = $_SERVER[REMOTE_ADDR];
+$user_ip = '';
+if (!elgg_is_logged_in()) {
+	// Try to get IP address
+	if (getenv('HTTP_CLIENT_IP')) {
+		$user_ip = getenv('HTTP_CLIENT_IP');
+	} elseif (getenv('HTTP_X_FORWARDED_FOR')) {
+		$user_ip = getenv('HTTP_X_FORWARDED_FOR');
+		// Check for multiple IP addresses in result from
+		// HTTP_X_FORWARDED_FOR and return only the last one
+		if (($pos = strrpos($user_ip, ",")) !== false) {
+			$user_ip = substr($user_ip, $pos+1);
+		}
+	} elseif (getenv('HTTP_X_FORWARDED')) {
+		$user_ip = getenv('HTTP_X_FORWARDED');
+	} elseif (getenv('HTTP_FORWARDED_FOR')) {
+		$user_ip = getenv('HTTP_FORWARDED_FOR');
+	} elseif (getenv('HTTP_FORWARDED')) {
+		$user_ip = getenv('HTTP_FORWARDED');
+	} else {
+		$user_ip = $_SERVER['REMOTE_ADDR'];
+	}
+
+	// Check for multiple IP addresses in 
+	if (($pos = strrpos($user_ip, ",")) !== false) {
+		$user_ip = substr($user_ip, $pos+1);
+	}
+}
 
 $user_id = elgg_echo('feedback:default:id');
 if (elgg_is_logged_in()) {
@@ -24,11 +50,11 @@ if (elgg_is_logged_in()) {
 	$user_id = $user->name . " (" . $user->email .")";
 }
 
-$progress_img = '<img src="' . elgg_get_site_url() . 'mod/feedback/_graphics/ajax-loader.gif" alt="' . elgg_echo('feedback:submit_msg') . '">';
+$progress_img = '<img src="' . elgg_get_site_url() . '_graphics/ajax_loader.gif' . '" alt="' . elgg_echo('feedback:submit_msg') . '">';
 $open_img = '<div class="elgg-button elgg-button-action feedbackButton">' . elgg_echo('feedback:title') . '</div>';
 $close_img = '<div class="elgg-button elgg-button-action feedbackButton">' . elgg_echo('feedback:title') . '</div>';
 
-echo "<div id='feedbackWrapper' data-userip='{$user_ip}' data-progressimg='{$progress_img}' data-openimg='{$open_img}' data-closeimg='{$close_img}'>";
+echo "<div id='feedbackWrapper' data-userip='" . $user_ip . "' data-progressimg='" . $progress_img . "' data-openimg='" . $open_img . "' data-closeimg='" . $close_img . "'>";
 
 	echo '<div id="feedBackToggler" href="#">';
 		echo '<a id="feedBackTogglerLink">' . $open_img . '</a>';

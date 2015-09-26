@@ -48,6 +48,6 @@ function feedback_init() {
 }
 
 function feedback_public($hook, $handler, $return, $params) {
-	$pages = array('mod/feedback/_graphics/ajax-loader.gif', 'action/feedback/submit_feedback');
+	$pages = array('action/feedback/submit_feedback');
 	return array_merge($pages, $return);
 }
