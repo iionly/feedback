@@ -50,7 +50,7 @@ if (elgg_is_logged_in()) {
 	$user_id = $user->name . " (" . $user->email .")";
 }
 
-$progress_img = '<img src="' . elgg_get_site_url() . '_graphics/ajax_loader.gif' . '" alt="' . elgg_echo('feedback:submit_msg') . '">';
+$progress_img = '<img src="' . elgg_get_simplecache_url('ajax_loader.gif') . '" alt="' . elgg_echo('feedback:submit_msg') . '">';
 $open_img = '<div class="elgg-button elgg-button-action feedbackButton">' . elgg_echo('feedback:title') . '</div>';
 $close_img = '<div class="elgg-button elgg-button-action feedbackButton">' . elgg_echo('feedback:title') . '</div>';
 
