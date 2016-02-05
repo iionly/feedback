@@ -39,7 +39,6 @@ function feedback_init() {
 	elgg_register_action('feedback/submit_feedback', elgg_get_plugins_path() . 'feedback/actions/submit_feedback.php', 'public');
 
 	elgg_register_page_handler('feedback', 'feedback_page_handler');
-	elgg_register_plugin_hook_handler('permissions_check', 'object', 'feedback_permissions_override');
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'feedback_entity_menu_setup');
 
 	elgg_register_plugin_hook_handler('register', 'menu:footer', 'feedback_footer_menu_setup');
@@ -105,38 +104,6 @@ function feedback_entity_menu_setup($hook, $type, $return, $params) {
 	}
 
 	return $return;
-}
-
-/*
- * Allow users that have permissions to review feedback to also edit/delete it
- *
- * @param string $hook   "permissions_check"
- * @param string $type   "object"
- * @param bool   $return Permission
- * @param array  $params Hook params
- * @return bool
- */
-function feedback_permissions_override($hook, $type, $return, $params) {
-
-	$entity = elgg_extract('entity', $params);
-
-	if (!$entity instanceof ElggObject || $entity->getSubtype() !== 'feedback') {
-		return;
-	}
-
-	if (!elgg_is_logged_in()) {
-		return;
-	}
-
-	$user = elgg_get_logged_in_user_entity();
-	$usernames = array();
-	for($i=1;$i<=5;$i++) {
-		$usernames[] = elgg_get_plugin_setting("user_{$i}", 'feedback');
-	}
-
-	if (in_array($user->username, $usernames)) {
-		return true;
-	}
 }
 
 /*
