@@ -13,4 +13,4 @@ $content = elgg_view_form('feedback/submit', array(
 	'action' => 'action/feedback/submit_feedback',
 ));
 
-echo $content;
+$module = elgg_view_module('info', $title, $content);
