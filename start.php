@@ -13,7 +13,6 @@
  * for Elgg 1.8 onwards by iionly
  * iionly@gmx.de
  */
-
 elgg_register_event_handler('init', 'system', 'feedback_init');
 
 /**
@@ -22,16 +21,10 @@ elgg_register_event_handler('init', 'system', 'feedback_init');
 function feedback_init() {
 
 	// extend the view
-	if (elgg_get_plugin_setting("publicAvailable_feedback", "feedback") == "yes" || elgg_is_logged_in()) {
-		elgg_extend_view('page/elements/body', 'feedback/footer');
-	}
+	elgg_extend_view('page/elements/body', 'feedback/footer');
 
 	// extend the site CSS
-	if (elgg_is_active_plugin('aalborg_theme')) {
-		elgg_extend_view('css/elgg', 'feedback/css_aalborg');
-	} else {
-		elgg_extend_view('css/elgg', 'feedback/css');
-	}
+	elgg_extend_view('elgg.css', 'feedback/feedback.css');
 	elgg_extend_view('css/admin', 'feedback/admin_css');
 
 	// create feedback page in admin section
@@ -50,4 +43,43 @@ function feedback_init() {
 function feedback_public($hook, $handler, $return, $params) {
 	$pages = array('action/feedback/submit_feedback');
 	return array_merge($pages, $return);
+}
+
+/**
+ * Identify a user
+ * @return string
+ */
+function feedback_get_user_id() {
+	if (elgg_is_logged_in()) {
+		$user = elgg_get_logged_in_user_entity();
+		$user_id = $user->name . " (" . $user->email . ")";
+	} else {
+
+		// Try to get IP address
+		if (getenv('HTTP_CLIENT_IP')) {
+			$user_id = getenv('HTTP_CLIENT_IP');
+		} elseif (getenv('HTTP_X_FORWARDED_FOR')) {
+			$user_id = getenv('HTTP_X_FORWARDED_FOR');
+			// Check for multiple IP addresses in result from
+			// HTTP_X_FORWARDED_FOR and return only the last one
+			if (($pos = strrpos($user_id, ",")) !== false) {
+				$user_id = substr($user_id, $pos + 1);
+			}
+		} elseif (getenv('HTTP_X_FORWARDED')) {
+			$user_id = getenv('HTTP_X_FORWARDED');
+		} elseif (getenv('HTTP_FORWARDED_FOR')) {
+			$user_id = getenv('HTTP_FORWARDED_FOR');
+		} elseif (getenv('HTTP_FORWARDED')) {
+			$user_id = getenv('HTTP_FORWARDED');
+		} else {
+			$user_id = $_SERVER['REMOTE_ADDR'];
+		}
+
+		// Check for multiple IP addresses in
+		if (($pos = strrpos($user_id, ",")) !== false) {
+			$user_id = substr($user_id, $pos + 1);
+		}
+	}
+
+	return $user_id ? : elgg_echo('feedback:default:id');
 }
