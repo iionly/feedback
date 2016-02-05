@@ -1,0 +1,95 @@
+/**
+ * Elgg Feedback plugin
+ * Feedback interface for Elgg sites
+ *
+ * @package Feedback
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+ * @author Prashant Juvekar
+ * @copyright Prashant Juvekar
+ * @link http://www.linkedin.com/in/prashantjuvekar
+ *
+ * for Elgg 1.8 onwards by iionly
+ * iionly@gmx.de
+ */
+
+#feedbackWrapper {
+	z-index: 1;
+}
+#feedBackToggler {
+	left: 0;
+	top: 320px;
+	position: fixed;
+}
+#feedBackContent {
+	left: 0;
+	width: 350px;
+	max-width: 100%;
+}
+.feedbackButton {
+	font-size: 18px;
+	padding: 4px 8px;
+
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	background: #F0F0F0;
+	color: #333;
+
+	display: block;
+
+	-webkit-border-top-left-radius: 0px;
+	-webkit-border-top-right-radius: 0px;
+	-moz-border-radius-topleft: 0px;
+	-moz-border-radius-topright: 0px;
+
+	-webkit-transform: rotate(-90deg);
+	-moz-transform: rotate(-90deg);
+	-ms-transform: rotate(-90deg);
+	-o-transform: rotate(-90deg);
+	transform: rotate(-90deg);
+
+	-webkit-transform-origin: 0% 0%;
+	-moz-transform-origin: 0% 0%;
+	-ms-transform-origin: 0% 0%;
+	-o-transform-origin: 0% 0%;
+	transform-origin: 0% 0%;
+
+	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+
+	-webkit-border-radius: 0 0 3px 3px;
+	-moz-border-radius: 0 0 3px 3px;
+	border-radius: 0 0 3px 3px;
+
+	text-decoration: none;
+}
+
+@media (max-width: 1030px) {
+	#feedbackWrapper {
+		position: static;
+		z-index: 1;
+	}
+	#feedBackToggler {
+		position: relative;
+		left: 1px;
+		float: none;
+	}
+	.feedbackButton {
+		position: static;
+		margin: 5px 0 5px 1px;
+		z-index: 1;
+		font-size: 18px;
+		display: inline-block;
+		-webkit-border-radius: 8px;
+		-moz-border-radius: 8px;
+		border-radius: 8px;
+		-webkit-transform: rotate(0deg);
+		-moz-transform: rotate(0deg);
+		-ms-transform: rotate(0deg);
+		-o-transform: rotate(0deg);
+		transform: rotate(0deg);
+		-webkit-transform-origin: 0% 0%;
+		-moz-transform-origin: 0% 0%;
+		-ms-transform-origin: 0% 0%;
+		-o-transform-origin: 0% 0%;
+		transform-origin: 0% 0%;
+		filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+	}
+}

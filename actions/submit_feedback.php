@@ -14,6 +14,10 @@
  * iionly@gmx.de
  */
 
+if (elgg_get_plugin_setting("publicAvailable_feedback", "feedback") != "yes" && !elgg_is_logged_in()) {
+	forward('', '403');
+}
+
 if (elgg_get_logged_in_user_guid()) {
 	$owner_guid = elgg_get_logged_in_user_guid();
 } else {
@@ -35,27 +39,27 @@ $feedback->about = get_input('about');
 $feedback->id = $feedback_sender = get_input('id');
 $feedback->txt = $feedback_txt = get_input('txt');
 // save the feedback now
-$feedback->save();
 
-// Success message
-echo "<div id=\"feedbackSuccess\">".elgg_echo("feedback:submit:success")."</div>";
+if ($feedback->save()) {
+	system_message(elgg_echo("feedback:submit:success"));
 
-// now email if required
-$user_guids = array();
-for ($idx=1; $idx<=5; $idx++) {
-	$name = elgg_get_plugin_setting('user_'.$idx, 'feedback');
-	if (!empty($name)) {
-		if ($user = get_user_by_username($name)) {
-			$user_guids[] = $user->guid;
+	// now email if required
+	$user_guids = array();
+	for ($idx = 1; $idx <= 5; $idx++) {
+		$name = elgg_get_plugin_setting('user_' . $idx, 'feedback');
+		if (!empty($name)) {
+			if ($user = get_user_by_username($name)) {
+				$user_guids[] = $user->guid;
+			}
 		}
 	}
-}
-if (count($user_guids) > 0) {
-	foreach($user_guids as $user_guid) {
-		notify_user($user_guid, elgg_get_config('site_guid'), elgg_echo('feedback:email:subject', array($feedback_sender)), elgg_echo('feedback:email:body', array($feedback_txt)));
+	if (count($user_guids) > 0) {
+		foreach ($user_guids as $user_guid) {
+			notify_user($user_guid, elgg_get_config('site_guid'), elgg_echo('feedback:email:subject', array($feedback_sender)), elgg_echo('feedback:email:body', array($feedback_txt)));
+		}
 	}
+} else {
+	register_error(elgg_echo("feedback:submit:error"));
 }
 
 elgg_set_ignore_access($access);
-
-exit();
