@@ -8,7 +8,7 @@ define(function (require) {
 		var $form = $(this);
 		var $pageInput = $form.find('input[name="page"]');
 		if (!$pageInput.val()) {
-			$pageInput.val(encodeURIComponent(location.href));
+			$pageInput.val(location.href);
 		}
 		elgg.action($form.attr('action'), {
 			data: $form.serialize(),
