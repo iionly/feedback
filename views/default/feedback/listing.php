@@ -14,27 +14,42 @@
  * iionly@gmx.de
  */
 
-$controls = elgg_view("output/url",array(
-	'href' => elgg_get_site_url() . "action/feedback/delete?guid=" . $vars['entity']->guid,
-	'text' => elgg_view_icon('delete'),
-	'is_action' => true,
-	'is_trusted' => true,
-	'confirm' => elgg_echo('deleteconfirm'),
+$entity = elgg_extract('entity', $vars);
+
+$controls = elgg_view_menu('entity', array(
+	'entity' => $entity,
+	'sort_by' => 'priority',
+	'class' => 'elgg-menu-hz',
 ));
 
-$mood = elgg_echo ( "feedback:mood:" . $vars['entity']->mood );
-$about = elgg_echo ( "feedback:about:" . $vars['entity']->about );
+$meta = array(
+	elgg_echo('feedback:list:mood') => elgg_echo("feedback:mood:$entity->mood"),
+	elgg_echo('feedback:list:from') => $entity->id,
+);
 
-$page = "Unknown";
-if ( !empty($vars['entity']->page) ) {
-	$page = $vars['entity']->page;
-	$page = "<a href='" . $page . "'>" . $page . "</a>";
+if ($entity->page) {
+	$meta[elgg_echo('feedback:list:page')] = elgg_view('output/url', array(
+		'href' => $entity->page,
+	));
+} else {
+	$meta[elgg_echo('feedback:list:page')] = 'Unknown';
 }
 
-$info = "<div><b>" . elgg_echo('feedback:list:mood') . ": </b>" . $mood . "</div>";
-$info .= "<div><b>" . elgg_echo('feedback:list:about') . ": </b>" . $about . "</div>";
-$info .= "<div><b>" . elgg_echo('feedback:list:page') . ": </b>" . $page . "</div>";
-$info .= "<div><b>" . elgg_echo('feedback:list:from') . ": </b>" . $vars['entity']->id . "</div>";
-$info .= "<div>" . $vars['entity']->txt . "</div>";
+$subtitle = array();
+foreach ($meta as $label => $value) {
+	$subtitle[] = "<b>$label</b>: $value";
+}
 
-echo elgg_view('page/components/image_block', array('image' => $controls, 'body' => $info, 'class' => 'submitted-feedback'));
+$subtitle[] = elgg_view_friendly_time($entity->time_created);
+
+$content = elgg_view('output/longtext', array(
+	'value' => $entity->txt,
+));
+
+echo elgg_view('object/elements/summary', array(
+	'entity' => $entity,
+	'title' => elgg_echo("feedback:about:$entity->about"),
+	'metadata' => $controls,
+	'subtitle' => implode('<br />', $subtitle),
+	'content' => $content,
+));
