@@ -18,6 +18,12 @@ if (elgg_get_plugin_setting("publicAvailable_feedback", "feedback") != "yes" && 
 	return;
 }
 
+$position = elgg_get_plugin_setting('form_position', 'feedback');
+if ($position) {
+	// default position is ''
+	return;
+}
+
 elgg_require_js('feedback/feedback');
 
 $toggle = elgg_view('output/url', array(

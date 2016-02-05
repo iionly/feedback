@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Elgg Feedback plugin
  * Feedback interface for Elgg sites
@@ -42,6 +41,9 @@ function feedback_init() {
 	elgg_register_page_handler('feedback', 'feedback_page_handler');
 	elgg_register_plugin_hook_handler('permissions_check', 'object', 'feedback_permissions_override');
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'feedback_entity_menu_setup');
+
+	elgg_register_plugin_hook_handler('register', 'menu:footer', 'feedback_footer_menu_setup');
+	elgg_register_plugin_hook_handler('register', 'menu:extras', 'feedback_extras_menu_setup');
 }
 
 function feedback_public($hook, $handler, $return, $params) {
@@ -95,10 +97,10 @@ function feedback_entity_menu_setup($hook, $type, $return, $params) {
 
 	if ($entity->canEdit()) {
 		$return[] = ElggMenuItem::factory(array(
-			'name' => 'delete',
-			'href' => "action/feedback/delete?guid=$entity->guid",
-			'text' => elgg_view_icon('delete'),
-			'confirm' => elgg_echo('deleteconfirm'),
+					'name' => 'delete',
+					'href' => "action/feedback/delete?guid=$entity->guid",
+					'text' => elgg_view_icon('delete'),
+					'confirm' => elgg_echo('deleteconfirm'),
 		));
 	}
 
@@ -174,4 +176,55 @@ function feedback_get_user_id() {
 	}
 
 	return $user_id ? : elgg_echo('feedback:default:id');
+}
+
+/*
+ * Feeback footer menu
+ *
+ * @param string         $hook   "register"
+ * @param string         $type   "menu:footer"
+ * @param ElggMenuItem[] $return Menu
+ * @param array          $params Hook params
+ * @return ElggMenuItem[]
+ */
+function feedback_footer_menu_setup($hook, $type, $return, $params) {
+
+	$position = elgg_get_plugin_setting('form_position', 'feedback');
+	if ($position == 'footer_menu') {
+		elgg_load_js('lightbox');
+		elgg_load_css('lightbox');
+		$return[] = ElggMenuItem::factory(array(
+					'name' => 'feedback',
+					'href' => 'feedback/submit',
+					'link_class' => 'elgg-lightbox',
+					'text' => elgg_echo('feedback:submit'),
+		));
+		return $return;
+	}
+}
+
+/*
+ * Feeback extras menu
+ *
+ * @param string         $hook   "register"
+ * @param string         $type   "menu:entity"
+ * @param ElggMenuItem[] $return Menu
+ * @param array          $params Hook params
+ * @return ElggMenuItem[]
+ */
+function feedback_extras_menu_setup($hook, $type, $return, $params) {
+
+	$position = elgg_get_plugin_setting('form_position', 'feedback');
+	if ($position == 'extras_menu') {
+		elgg_load_js('lightbox');
+		elgg_load_css('lightbox');
+		$return[] = ElggMenuItem::factory(array(
+					'name' => 'feedback',
+					'href' => 'feedback/submit',
+					'text' => elgg_view_icon('bullhorn'),
+					'link_class' => 'elgg-lightbox',
+					'title' => elgg_echo('feedback:submit'),
+		));
+		return $return;
+	}
 }

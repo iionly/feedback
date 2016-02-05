@@ -66,5 +66,12 @@ return array(
 'feedback:settings:usernames' => "You can enter up to 5 users who should receive notifications if new feedback has been given. These users will also be able to delete feedback if they are not admins. Enter the usernames in the following: ",
 
 'feedback:email:subject' => 'Received feedback from %s',
-'feedback:email:body' => '%s'
+'feedback:email:body' => '%s',
+
+	'feedback:submit' => 'Leave Feedback',
+	
+	'feedback:settings:form_position' => 'Feedback Toogle Position',
+	'feedback:settings:form_position:default' => 'Fixed to the screen edge',
+	'feedback:settings:form_position:footer_menu' => 'Footer menu',
+	'feedback:settings:form_position:extras_menu' => 'Extras menu',
 );

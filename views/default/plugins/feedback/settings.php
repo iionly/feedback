@@ -37,3 +37,18 @@ $entity = elgg_extract('entity', $vars);
 	}
 	?>
 </div>
+
+<div>
+	<label><?php echo elgg_echo("feedback:settings:form_position") ?></label>
+	<?php
+	echo elgg_view('input/select', array(
+		'name' => 'params[form_position]',
+		'value' => $entity->form_position,
+		'options_values' => array(
+			'' => elgg_echo('feedback:settings:form_position:default'),
+			'footer_menu' => elgg_echo('feedback:settings:form_position:footer_menu'),
+			'extras_menu' => elgg_echo('feedback:settings:form_position:extras_menu'),
+		)
+	));
+	?>
+</div>

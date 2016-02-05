@@ -6,6 +6,9 @@ define(function (require) {
 	$(document).on('click', '.feedback-toggler', function () {
 		// forcefully hide the popup
 		$('body').trigger('click');
+		if (typeof elgg.ui.lightbox.close === 'function') {
+			elgg.ui.lightbox.close();
+		}
 	});
 
 	/**
