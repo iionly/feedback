@@ -61,6 +61,10 @@
 	text-decoration: none;
 }
 
+.feedback-form-module {
+	max-width: 600px;
+}
+
 @media (max-width: 1030px) {
 	#feedbackWrapper {
 		position: static;
