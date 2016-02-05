@@ -39,16 +39,45 @@ function feedback_init() {
 	elgg_register_action('feedback/delete', elgg_get_plugins_path() . 'feedback/actions/delete.php', 'admin');
 	elgg_register_action('feedback/submit_feedback', elgg_get_plugins_path() . 'feedback/actions/submit_feedback.php', 'public');
 
+	elgg_register_page_handler('feedback', 'feedback_page_handler');
 	elgg_register_plugin_hook_handler('permissions_check', 'object', 'feedback_permissions_override');
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'feedback_entity_menu_setup');
 }
 
 function feedback_public($hook, $handler, $return, $params) {
-	$pages = array('action/feedback/submit_feedback');
+	$pages = array(
+		'action/feedback/submit_feedback',
+		'feedback/submit',
+	);
 	return array_merge($pages, $return);
 }
 
 /**
+ * Feedback page handler
+ * /feedback/all
+ * /feedback/submit
+ *
+ * @param array $segments URL segments
+ * @return bool
+ */
+function feedback_page_handler($segments) {
+
+	$page = array_shift($segments);
+
+	switch ($page) {
+		case 'all' :
+			echo elgg_view_resource('feedback/all');
+			return true;
+
+		case 'submit' :
+			echo elgg_view_resource('feedback/submit');
+			return true;
+	}
+
+	return false;
+}
+
+/*
  * Feeback object entity menu
  *
  * @param string         $hook   "register"

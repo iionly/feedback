@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Elgg Feedback plugin
  * Feedback interface for Elgg sites
@@ -8,20 +9,17 @@
  *
  * List the latest feedback entries
  */
+$entity = elgg_extract('entity', $vars);
 
-$limit = $vars['entity']->num_display;
-if (!$limit) {
-	$limit = 4;
-}
-
-$list = elgg_list_entities(array(
-	'type' => 'object',
-	'subtype' => 'feedback',
-	'limit' => $limit,
-	'pagination' => false
+echo elgg_view('lists/feedback', array(
+	'limit' => $entity->num_display ? : 4,
 ));
-if (!$list) {
-	$list = '<p class="mtm">' . elgg_echo('feedback:list:nofeedback') . '</p>';
-}
 
-echo $list;
+$more_link = elgg_view('output/url', array(
+	'href' => 'feedback/all',
+	'text' => elgg_echo('link:view:all'),
+		));
+
+echo elgg_format_element('div', [
+	'class' => 'elgg-widget-more',
+		], $more_link);
