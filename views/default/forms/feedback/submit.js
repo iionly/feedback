@@ -28,4 +28,9 @@ define(function (require) {
 		});
 		return false;
 	});
+
+	$(document).on('click', '.feedback-toggler', function () {
+		// forcefully hide the popup
+		$('body,#cboxClose').trigger('click');
+	});
 });
