@@ -1,33 +1,39 @@
-<!-- Publicly available? -->
-<?php echo elgg_echo("feedback:settings:public");?>
-<select name="params[publicAvailable_feedback]">
-	<option value="yes" <?php if ($vars['entity']->publicAvailable_feedback == 'yes') echo " selected=\"yes\" "; ?>><?php echo elgg_echo('option:yes'); ?></option>
-	<option value="no" <?php if ($vars['entity']->publicAvailable_feedback == 'no' || empty($vars['entity']->publicAvailable_feedback)) echo " selected=\"yes\" "; ?>><?php echo elgg_echo('option:no'); ?></option>
-</select>
-<br><br>
-
-<p>
-<?php echo elgg_echo("feedback:settings:usernames");?>
-<br>
+<?php
+$entity = elgg_extract('entity', $vars);
+?>
+<div>
+	<label><?php echo elgg_echo("feedback:settings:public") ?></label>
 	<?php
-		echo "<label>".elgg_echo('feedback:user_1')."</label>";
-		echo "<input type='text' size='60' name='params[user_1]' value='".$vars['entity']->user_1."' />";
-		echo "<br />";
-
-		echo "<label>".elgg_echo('feedback:user_2')."</label>";
-		echo "<input type='text' size='60' name='params[user_2]' value='".$vars['entity']->user_2."' />";
-		echo "<br />";
-
-		echo "<label>".elgg_echo('feedback:user_3')."</label>";
-		echo "<input type='text' size='60' name='params[user_3]' value='".$vars['entity']->user_3."' />";
-		echo "<br />";
-
-		echo "<label>".elgg_echo('feedback:user_4')."</label>";
-		echo "<input type='text' size='60' name='params[user_4]' value='".$vars['entity']->user_4."' />";
-		echo "<br />";
-
-		echo "<label>".elgg_echo('feedback:user_5')."</label>";
-		echo "<input type='text' size='60' name='params[user_5]' value='".$vars['entity']->user_5."' />";
-		echo "<br />";
+	echo elgg_view('input/select', array(
+		'name' => 'params[publicAvailable_feedback]',
+		'value' => $entity->publicAvailable_feedback,
+		'options_values' => array(
+			'yes' => elgg_echo('option:yes'),
+			'no' => elgg_echo('option:no'),
+		),
+	));
 	?>
-</p>
+</div>
+<div>
+	<label><?php echo elgg_echo("feedback:settings:usernames") ?></label>
+	<?php
+	for ($i = 1; $i <= 5; $i++) {
+		?>
+		<div>
+			<label><?php echo elgg_echo("feedback:user_{$i}") ?></label>
+			<?php
+			$sn = "user_{$i}";
+			$value = $entity->$sn;
+			if (!get_user_by_username($value)) {
+				$value = '';
+			}
+			echo elgg_view('input/text', array(
+				'name' => "params[{$sn}]",
+				'value' => $value,
+			));
+			?>
+		</div>
+		<?php
+	}
+	?>
+</div>

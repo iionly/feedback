@@ -63,7 +63,7 @@ return array(
 'feedback:user_4' => "User Name 4: ",
 'feedback:user_5' => "User Name 5: ",
 'feedback:settings:public' => "Should logged-out site visitors be allowed to give feedback? ",
-'feedback:settings:usernames' => "You can enter up to 5 users who should receive notifications if new feedback has been given. Enter the usernames in the following: ",
+'feedback:settings:usernames' => "You can enter up to 5 users who should receive notifications if new feedback has been given. These users will also be able to delete feedback if they are not admins. Enter the usernames in the following: ",
 
 'feedback:email:subject' => 'Received feedback from %s',
 'feedback:email:body' => '%s'
