@@ -40,6 +40,7 @@ function feedback_init() {
 	elgg_register_action('feedback/submit_feedback', elgg_get_plugins_path() . 'feedback/actions/submit_feedback.php', 'public');
 
 	elgg_register_plugin_hook_handler('permissions_check', 'object', 'feedback_permissions_override');
+	elgg_register_plugin_hook_handler('register', 'menu:entity', 'feedback_entity_menu_setup');
 }
 
 function feedback_public($hook, $handler, $return, $params) {
@@ -48,6 +49,34 @@ function feedback_public($hook, $handler, $return, $params) {
 }
 
 /**
+ * Feeback object entity menu
+ *
+ * @param string         $hook   "register"
+ * @param string         $type   "menu:entity"
+ * @param ElggMenuItem[] $return Menu
+ * @param array          $params Hook params
+ * @return ElggMenuItem[]
+ */
+function feedback_entity_menu_setup($hook, $type, $return, $params) {
+
+	$entity = elgg_extract('entity', $params);
+	if (!$entity instanceof ElggObject || $entity->getSubtype() != 'feedback') {
+		return;
+	}
+
+	if ($entity->canEdit()) {
+		$return[] = ElggMenuItem::factory(array(
+			'name' => 'delete',
+			'href' => "action/feedback/delete?guid=$entity->guid",
+			'text' => elgg_view_icon('delete'),
+			'confirm' => elgg_echo('deleteconfirm'),
+		));
+	}
+
+	return $return;
+}
+
+/*
  * Allow users that have permissions to review feedback to also edit/delete it
  *
  * @param string $hook   "permissions_check"
