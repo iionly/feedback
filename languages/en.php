@@ -16,62 +16,77 @@
 
 return array(
 
-'admin:administer_utilities:feedback' => 'Site Feedback',
-'item:object:feedback' => 'Feedback',
-'feedback:label' => 'Feedback',
-'feedback:title' => 'Feedback',
+	'admin:administer_utilities:feedback' => 'Site Feedback',
+	'item:object:feedback' => 'Feedback',
+	'feedback:label' => 'Feedback',
+	'feedback:title' => 'Feedback',
 
-'feedback:admin:title' => 'Site Feedback',
-'feedback:widget:description' => 'Display feedback made by site members.',
-'feedback:numbertodisplay' => 'Number of feedback entries to display',
+	'feedback:admin:title' => 'Site Feedback',
+	'feedback:widget:description' => 'Display feedback made by site members.',
+	'feedback:numbertodisplay' => 'Number of feedback entries to display',
 
-'feedback:message' => 'Love it? Hate it? Want to suggest new features or report a bug? We would love to hear from you.',
+	'feedback:message' => 'Love it? Hate it? Want to suggest new features or report a bug? We would love to hear from you.',
 
-'feedback:default:id' => 'Name and/or Email',
-'feedback:default:txt' => 'Let us know what you think!',
-'feedback:default:txt:err' => "No feedback message has been provided.\nWe value your suggestions and criticisms.\nPlease enter your message and press Send.",
+	'feedback:default:id' => 'Name and/or Email (optional)',
+	'feedback:default:txt' => 'Let us know what you think!',
+	'feedback:default:txt:err' => "No feedback message has been provided.\nWe value your suggestions and criticisms.\nPlease enter your message and press Send.",
+	'feedback:default:id:none' => 'No name and/or email provided',
+	'feedback:default:ip:unknown' => 'IP address unknown',
 
-'feedback:submit_msg' => 'Submitting...',
-'feedback:submit_err' => 'Could not submit feedback!',
+	'feedback:submit_msg' => 'Submitting...',
+	'feedback:submit_err' => 'Could not submit feedback!',
 
-'feedback:submit:error' => 'Could not submit feedback!',
-'feedback:submit:success' => 'Feedback submitted successfully. Thank you!',
+	'feedback:submit:error' => 'Could not submit feedback!',
+	'feedback:submit:success' => 'Feedback submitted successfully. Thank you!',
 
-'feedback:delete:success' => 'Feedback was deleted successfully.',
+	'feedback:delete:success' => 'Feedback was deleted successfully.',
+	'feedback:delete:error' => 'Deletion of Feedback has failed.',
 
-'feedback:mood:' => 'None',
-'feedback:mood:angry' => 'Angry',
-'feedback:mood:neutral' => 'Neutral',
-'feedback:mood:happy' => 'Happy',
+	'feedback:mood:' => 'None',
+	'feedback:mood:angry' => 'Angry',
+	'feedback:mood:neutral' => 'Neutral',
+	'feedback:mood:happy' => 'Happy',
 
-'feedback:about:' => 'None',
-'feedback:about:bug_report' => 'Bug Report',
-'feedback:about:content' => 'Content',
-'feedback:about:suggestions' => 'Suggestions',
-'feedback:about:compliment' => 'Compliment',
-'feedback:about:other' => 'Other',
+	'feedback:about:' => 'None',
+	'feedback:about:bug_report' => 'Bug Report',
+	'feedback:about:content' => 'Content',
+	'feedback:about:suggestions' => 'Suggestions',
+	'feedback:about:compliment' => 'Compliment',
+	'feedback:about:other' => 'Other',
 
-'feedback:list:mood' => 'Mood',
-'feedback:list:about' => 'About',
-'feedback:list:page' => 'Submit Page',
-'feedback:list:from' => 'From',
-'feedback:list:nofeedback' => 'Currently there\'s no feedback from site members available.',
+	'feedback:list:mood' => 'Mood',
+	'feedback:list:about' => 'About',
+	'feedback:list:page' => 'Submit Page',
+	'feedback:list:page:unknown' => 'Unknown',
+	'feedback:list:from' => 'From',
+	'feedback:list:nofeedback' => 'Currently there\'s no feedback from site members available.',
 
-'feedback:user_1' => "User Name 1: ",
-'feedback:user_2' => "User Name 2: ",
-'feedback:user_3' => "User Name 3: ",
-'feedback:user_4' => "User Name 4: ",
-'feedback:user_5' => "User Name 5: ",
-'feedback:settings:public' => "Should logged-out site visitors be allowed to give feedback? ",
-'feedback:settings:usernames' => "You can enter up to 5 admin users who should receive notifications if new feedback has been given. Enter the usernames in the following: ",
+	'feedback:user_1' => "User Name 1: ",
+	'feedback:user_2' => "User Name 2: ",
+	'feedback:user_3' => "User Name 3: ",
+	'feedback:user_4' => "User Name 4: ",
+	'feedback:user_5' => "User Name 5: ",
+	'feedback:settings:public' => "Should logged-out site visitors be allowed to give feedback? ",
+	'feedback:settings:usernames' => "You can enter up to 5 admin users who should receive notifications if new feedback has been given. Enter the usernames in the following: ",
 
-'feedback:email:subject' => 'Received feedback from %s',
-'feedback:email:body' => '%s',
+'feedback:email:subject' => 'Received feedback',
+'feedback:email:body' => 'Hello %s,
+
+there\'s new feedback:
+
+%s
+
+Mood: %s
+From: %s
+Submit Page: %s
+
+%s
+',
 
 	'feedback:submit' => 'Leave Feedback',
 	
-	'feedback:settings:form_position' => 'Feedback Toogle Position',
-	'feedback:settings:form_position:default' => 'Fixed to the screen edge',
-	'feedback:settings:form_position:footer_menu' => 'Footer menu',
-	'feedback:settings:form_position:extras_menu' => 'Extras menu',
+	'feedback:settings:form_position' => 'Position of Feedback-Toggle',
+	'feedback:settings:form_position:default' => 'Fixed to left screen edge',
+	'feedback:settings:form_position:footer_menu' => 'Footer menu entry',
+	'feedback:settings:form_position:extras_menu' => 'Extras menu entry',
 );

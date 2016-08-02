@@ -33,13 +33,26 @@ $feedback->subtype = "feedback";
 $feedback->owner_guid = $owner_guid;
 $feedback->container_guid = $owner_guid;
 // Set the feedback's content
-$feedback->page = get_input('page');
-$feedback->mood = get_input('mood');
-$feedback->about = get_input('about');
+$feedback->page = $feedback_page = get_input('page');
+$feedback->mood = $feedback_mood = get_input('mood');
+$feedback->about = $feedback_about = get_input('about');
 $feedback->id = $feedback_sender = get_input('id');
 $feedback->txt = $feedback_txt = get_input('txt');
-// save the feedback now
 
+if ($logged_in_user = elgg_get_logged_in_user_entity()) {
+	$feedback_sender = $logged_in_user->name . " (" . $logged_in_user->email . ")";
+
+	$link_params = array(
+		'href' => $logged_in_user->getUrl(),
+		'text' => $logged_in_user->name,
+	);
+	$feedback->id = elgg_view('output/url', $link_params) . " (" . $logged_in_user->email . ")";
+} else {
+	$feedback_name = get_input('name', elgg_echo('feedback:default:id:none'));
+	$feedback->id = $feedback_sender = $feedback_name  . " (" . get_input('id') . ")";
+}
+
+// save the feedback now
 if ($feedback->save()) {
 	system_message(elgg_echo("feedback:submit:success"));
 
@@ -55,7 +68,21 @@ if ($feedback->save()) {
 	}
 	if (count($user_guids) > 0) {
 		foreach ($user_guids as $user_guid) {
-			notify_user($user_guid, elgg_get_config('site_guid'), elgg_echo('feedback:email:subject', array($feedback_sender)), elgg_echo('feedback:email:body', array($feedback_txt)));
+			if ($user = get_user($user_guid)) {
+				$feedback_page = $feedback_page ? : elgg_echo('feedback:list:page:unknown', array(), $user_language);
+				$admins = elgg_get_admins(array('order_by' => 'time_created asc'));
+				$user_language = ($user->language) ? $user->language : (($site_language = elgg_get_config('language')) ? $site_language : 'en');
+				$feedback_page = $feedback_page ? : elgg_echo('feedback:list:page:unknown', array(), $user_language);
+				$subject = elgg_echo("feedback:email:subject", array(), $user_language);
+				$message = elgg_echo("feedback:email:body", array(
+					$user->name,
+					elgg_echo("feedback:about:$feedback_about", array(), $user_language),
+					elgg_echo("feedback:mood:$feedback_mood", array(), $user_language),
+					$feedback_sender,
+					$feedback_page,
+					$feedback_txt), $user_language);
+				notify_user($user_guid, $admins[0]->guid, $subject, $message);
+			}
 		}
 	}
 } else {

@@ -1,11 +1,11 @@
 Feedback plugin for Elgg 2.X
 ============================
 
-Latest Version: 2.0.0  
-Released: 2015-09-26  
+Latest Version: 2.0.1  
+Released: 2016-08-01  
 Contact: iionly@gmx.de  
 License: GNU General Public License version 2  
-Copyright: (c) iionly (for Elgg 1.8 onwards), Simon ST (for Elgg 1.7), Prashant Juvekar  
+Copyright: (c) iionly (for Elgg 1.8 onwards), Simon ST (for Elgg 1.7), Prashant Juvekar
 
 
 Description

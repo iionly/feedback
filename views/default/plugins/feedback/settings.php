@@ -1,6 +1,8 @@
 <?php
+
 $entity = elgg_extract('entity', $vars);
 ?>
+
 <div>
 	<label><?php echo elgg_echo("feedback:settings:public") ?></label>
 	<?php
@@ -14,6 +16,7 @@ $entity = elgg_extract('entity', $vars);
 	));
 	?>
 </div>
+
 <div>
 	<label><?php echo elgg_echo("feedback:settings:usernames") ?></label>
 	<?php

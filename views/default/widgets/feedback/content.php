@@ -18,8 +18,10 @@ echo elgg_view('lists/feedback', array(
 $more_link = elgg_view('output/url', array(
 	'href' => 'feedback/all',
 	'text' => elgg_echo('link:view:all'),
-		));
+));
 
 echo elgg_format_element('div', [
-	'class' => 'elgg-widget-more',
-		], $more_link);
+		'class' => 'elgg-widget-more',
+	],
+	$more_link
+);

@@ -21,8 +21,11 @@ $guid = (int) get_input('guid');
 $feedback = get_entity($guid);
 if ($feedback->getSubtype() == "feedback") {
 	// Delete it!
-	$feedback->delete();
-	// Success message
-	system_message(elgg_echo("feedback:delete:success"));
-	forward(REFERER);
+	if ($feedback->delete()) {
+		// Success message
+		system_message(elgg_echo("feedback:delete:success"));
+	} else {
+		register_error(elgg_echo("feedback:delete:error"));
+	}
 }
+forward(REFERER);

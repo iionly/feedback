@@ -32,7 +32,7 @@ if ($entity->page) {
 		'href' => $entity->page,
 	));
 } else {
-	$meta[elgg_echo('feedback:list:page')] = 'Unknown';
+	$meta[elgg_echo('feedback:list:page')] = elgg_echo('feedback:list:page:unknown');
 }
 
 $subtitle = array();
@@ -50,6 +50,6 @@ echo elgg_view('object/elements/summary', array(
 	'entity' => $entity,
 	'title' => elgg_echo("feedback:about:$entity->about"),
 	'metadata' => $controls,
-	'subtitle' => implode('<br />', $subtitle),
+	'subtitle' => implode('<br>', $subtitle),
 	'content' => $content,
 ));

@@ -12,6 +12,7 @@
  * for Elgg 1.8 onwards by iionly
  * iionly@gmx.de
  */
+
 elgg_register_event_handler('init', 'system', 'feedback_init');
 
 /**
@@ -24,6 +25,7 @@ function feedback_init() {
 
 	// extend the site CSS
 	elgg_extend_view('elgg.css', 'feedback/feedback.css');
+	elgg_extend_view('admin.css', 'feedback/admin_feedback.css');
 
 	// create feedback page in admin section
 	elgg_register_admin_menu_item('administer', 'feedback', 'administer_utilities');
@@ -38,8 +40,8 @@ function feedback_init() {
 	elgg_register_action('feedback/submit_feedback', elgg_get_plugins_path() . 'feedback/actions/submit_feedback.php', 'public');
 
 	elgg_register_page_handler('feedback', 'feedback_page_handler');
-	elgg_register_plugin_hook_handler('register', 'menu:entity', 'feedback_entity_menu_setup');
 
+	elgg_register_plugin_hook_handler('register', 'menu:entity', 'feedback_entity_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:footer', 'feedback_footer_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:extras', 'feedback_extras_menu_setup');
 }
@@ -65,11 +67,11 @@ function feedback_page_handler($segments) {
 	$page = array_shift($segments);
 
 	switch ($page) {
-		case 'all' :
+		case 'all':
 			echo elgg_view_resource('feedback/all');
 			return true;
 
-		case 'submit' :
+		case 'submit':
 			echo elgg_view_resource('feedback/submit');
 			return true;
 	}
@@ -95,10 +97,10 @@ function feedback_entity_menu_setup($hook, $type, $return, $params) {
 
 	if ($entity->canEdit()) {
 		$return[] = ElggMenuItem::factory(array(
-					'name' => 'delete',
-					'href' => "action/feedback/delete?guid=$entity->guid",
-					'text' => elgg_view_icon('delete'),
-					'confirm' => elgg_echo('deleteconfirm'),
+			'name' => 'delete',
+			'href' => "action/feedback/delete?guid=$entity->guid",
+			'text' => elgg_view_icon('delete'),
+			'confirm' => elgg_echo('deleteconfirm'),
 		));
 	}
 
@@ -110,38 +112,32 @@ function feedback_entity_menu_setup($hook, $type, $return, $params) {
  * @return string
  */
 function feedback_get_user_id() {
-	if (elgg_is_logged_in()) {
-		$user = elgg_get_logged_in_user_entity();
-		$user_id = $user->name . " (" . $user->email . ")";
-	} else {
-
-		// Try to get IP address
-		if (getenv('HTTP_CLIENT_IP')) {
-			$user_id = getenv('HTTP_CLIENT_IP');
-		} elseif (getenv('HTTP_X_FORWARDED_FOR')) {
-			$user_id = getenv('HTTP_X_FORWARDED_FOR');
-			// Check for multiple IP addresses in result from
-			// HTTP_X_FORWARDED_FOR and return only the last one
-			if (($pos = strrpos($user_id, ",")) !== false) {
-				$user_id = substr($user_id, $pos + 1);
-			}
-		} elseif (getenv('HTTP_X_FORWARDED')) {
-			$user_id = getenv('HTTP_X_FORWARDED');
-		} elseif (getenv('HTTP_FORWARDED_FOR')) {
-			$user_id = getenv('HTTP_FORWARDED_FOR');
-		} elseif (getenv('HTTP_FORWARDED')) {
-			$user_id = getenv('HTTP_FORWARDED');
-		} else {
-			$user_id = $_SERVER['REMOTE_ADDR'];
-		}
-
-		// Check for multiple IP addresses in
+	// Try to get IP address
+	if (getenv('HTTP_CLIENT_IP')) {
+		$user_id = getenv('HTTP_CLIENT_IP');
+	} elseif (getenv('HTTP_X_FORWARDED_FOR')) {
+		$user_id = getenv('HTTP_X_FORWARDED_FOR');
+		// Check for multiple IP addresses in result from
+		// HTTP_X_FORWARDED_FOR and return only the last one
 		if (($pos = strrpos($user_id, ",")) !== false) {
 			$user_id = substr($user_id, $pos + 1);
 		}
+	} elseif (getenv('HTTP_X_FORWARDED')) {
+		$user_id = getenv('HTTP_X_FORWARDED');
+	} elseif (getenv('HTTP_FORWARDED_FOR')) {
+		$user_id = getenv('HTTP_FORWARDED_FOR');
+	} elseif (getenv('HTTP_FORWARDED')) {
+		$user_id = getenv('HTTP_FORWARDED');
+	} else {
+		$user_id = $_SERVER['REMOTE_ADDR'];
 	}
 
-	return $user_id ? : elgg_echo('feedback:default:id');
+	// Check for multiple IP addresses in
+	if (($pos = strrpos($user_id, ",")) !== false) {
+		$user_id = substr($user_id, $pos + 1);
+	}
+
+	return $user_id ? : elgg_echo('feedback:default:ip:unknown');
 }
 
 /*
@@ -157,16 +153,19 @@ function feedback_footer_menu_setup($hook, $type, $return, $params) {
 
 	$position = elgg_get_plugin_setting('form_position', 'feedback');
 	if ($position == 'footer_menu') {
-		elgg_load_js('lightbox');
-		elgg_load_css('lightbox');
-		$return[] = ElggMenuItem::factory(array(
-					'name' => 'feedback',
-					'href' => 'feedback/submit',
-					'link_class' => 'elgg-lightbox',
-					'text' => elgg_echo('feedback:submit'),
-		));
-		return $return;
+		if (elgg_is_logged_in() || elgg_get_plugin_setting("publicAvailable_feedback", "feedback") == "yes") {
+			elgg_load_js('lightbox');
+			elgg_load_css('lightbox');
+			$return[] = ElggMenuItem::factory(array(
+				'name' => 'feedback',
+				'href' => 'feedback/submit',
+				'link_class' => 'elgg-lightbox',
+				'text' => elgg_echo('feedback:submit'),
+			));
+		}
 	}
+
+	return $return;
 }
 
 /*
@@ -182,15 +181,18 @@ function feedback_extras_menu_setup($hook, $type, $return, $params) {
 
 	$position = elgg_get_plugin_setting('form_position', 'feedback');
 	if ($position == 'extras_menu') {
-		elgg_load_js('lightbox');
-		elgg_load_css('lightbox');
-		$return[] = ElggMenuItem::factory(array(
-					'name' => 'feedback',
-					'href' => 'feedback/submit',
-					'text' => elgg_view_icon('bullhorn'),
-					'link_class' => 'elgg-lightbox',
-					'title' => elgg_echo('feedback:submit'),
-		));
-		return $return;
+		if (elgg_is_logged_in() || elgg_get_plugin_setting("publicAvailable_feedback", "feedback") == "yes") {
+			elgg_load_js('lightbox');
+			elgg_load_css('lightbox');
+			$return[] = ElggMenuItem::factory(array(
+				'name' => 'feedback',
+				'href' => 'feedback/submit',
+				'text' => elgg_view_icon('bullhorn'),
+				'link_class' => 'elgg-lightbox',
+				'title' => elgg_echo('feedback:submit'),
+			));
+		}
 	}
+
+	return $return;
 }

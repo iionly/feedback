@@ -14,4 +14,4 @@
  * iionly@gmx.de
  */
 
-echo elgg_view("feedback/listing",$vars);
+echo elgg_view("feedback/listing", $vars);

@@ -1,6 +1,15 @@
 Changelog
 =========
 
+2.0.1
+-----
+
+* Thorough code cleanup and re-work/modernization (thanks to Ismayil Khayredinov!),
+* Alternative positions of Feedback button (extra menu or footer) in addition to left page border (again thanks to Ismayil Khayredinov),
+* For feedback position extra menu and footer the feedback submit window opens in centered lightbox popup,
+* Notification of admins on new feedback sent in language configured by the admin users,
+* Link to member's profile page for feedback sent by site members (only works for new feedback).
+
 2.0.0
 -----
 

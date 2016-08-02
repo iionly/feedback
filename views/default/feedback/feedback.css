@@ -26,7 +26,7 @@
 	max-width: 100%;
 }
 .feedbackButton {
-	font-size: 18px;
+	font-size: 24px;
 	padding: 4px 8px;
 
 	border: 1px solid rgba(0, 0, 0, 0.2);
@@ -61,6 +61,14 @@
 	text-decoration: none;
 }
 
+.feedbackInput {
+	font-size:small;
+}
+
+.feedbackTextbox {
+	resize: none;
+}
+
 .feedback-form-module {
 	max-width: 600px;
 }
@@ -73,6 +81,7 @@
 	#feedBackToggler {
 		position: relative;
 		left: 1px;
+		top: 0px;
 		float: none;
 	}
 	.feedbackButton {
