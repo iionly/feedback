@@ -1,6 +1,12 @@
 Changelog
 =========
 
+2.3.1
+-----
+
+* Requires Elgg 2.3.0 at minimum,
+* No longer load lightbox JS and CSS because it's loaded by Elgg core everywhere anyway now.
+
 2.0.1
 -----
 

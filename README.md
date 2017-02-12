@@ -1,8 +1,8 @@
-Feedback plugin for Elgg 2.X
-============================
+Feedback plugin for Elgg 2.3 and newer Elgg 2.X
+===============================================
 
-Latest Version: 2.0.1  
-Released: 2016-08-01  
+Latest Version: 2.3.1  
+Released: 2017-02-12  
 Contact: iionly@gmx.de  
 License: GNU General Public License version 2  
 Copyright: (c) iionly (for Elgg 1.8 onwards), Simon ST (for Elgg 1.7), Prashant Juvekar

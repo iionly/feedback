@@ -154,8 +154,6 @@ function feedback_footer_menu_setup($hook, $type, $return, $params) {
 	$position = elgg_get_plugin_setting('form_position', 'feedback');
 	if ($position == 'footer_menu') {
 		if (elgg_is_logged_in() || elgg_get_plugin_setting("publicAvailable_feedback", "feedback") == "yes") {
-			elgg_load_js('lightbox');
-			elgg_load_css('lightbox');
 			$return[] = ElggMenuItem::factory(array(
 				'name' => 'feedback',
 				'href' => 'feedback/submit',
@@ -182,8 +180,6 @@ function feedback_extras_menu_setup($hook, $type, $return, $params) {
 	$position = elgg_get_plugin_setting('form_position', 'feedback');
 	if ($position == 'extras_menu') {
 		if (elgg_is_logged_in() || elgg_get_plugin_setting("publicAvailable_feedback", "feedback") == "yes") {
-			elgg_load_js('lightbox');
-			elgg_load_css('lightbox');
 			$return[] = ElggMenuItem::factory(array(
 				'name' => 'feedback',
 				'href' => 'feedback/submit',
